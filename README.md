@@ -1,20 +1,17 @@
 # Házi feladat - Fauszt András
 
-Futtatás
+### To run
 
 ~~~shell
+# Copy env file and update values
+cp .env .env.local
+
 docker compose up -d
 ~~~
 
-Az oldal elérhető a böngészőből
-~~~
-http://localhost
-~~~
+Open in the browser at `http://localhost`
 
 ~~~shell
-# Copy env file
-cp .env.example .env
-
 # Seed database
 php bin/console doctrine:fixtures:load
 ~~~

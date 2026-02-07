@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+    app:
+        build:
+            context: .
+        ports:
+            - "80:80"
+        volumes:
+            - .:/app
+        environment:
+            APP_ENV: dev
+            APP_DEBUG: 1
+        env_file:
+            - .env.local
+        restart: unless-stopped
+
+    db:
+        image: mysql:8.0
+        env_file:
+            - path: .env.local
+              required: true
+#        environment:
+#            MYSQL_RANDOM_ROOT_PASSWORD: true
+        ports:
+            - "${MYSQL_PORT:-3306}:3306"
+        restart: unless-stopped
+        volumes:
+            - mysql_data:/var/lib/mysql
+volumes:
+  mysql_data:
