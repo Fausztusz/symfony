@@ -7,11 +7,15 @@ RUN apt-get update && apt-get install -y \
     git \
     unzip \
     libicu-dev \
-    libzip-dev \
-    && docker-php-ext-install \
+    libzip-dev
+RUN docker-php-ext-install \
         intl \
         zip \
         opcache \
+        pdo \
+        mysqli \
+        pdo_mysql \
+    && docker-php-ext-enable pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
@@ -28,7 +32,6 @@ RUN chown -R www-data:www-data /app
 
 # Install PHP dependencies
 RUN composer install \
-    --no-dev \
     --optimize-autoloader \
     --no-interaction
 
