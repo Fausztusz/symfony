@@ -26,6 +26,7 @@ class UserFixtures extends Fixture
 
         $userAdmin = new User;
         $userAdmin->setEmail('admin@test.com');
+        $userAdmin->setName('András');
 
         $adminPassword = $this->passwordHasher->hashPassword(
             $userAdmin,
@@ -42,6 +43,7 @@ class UserFixtures extends Fixture
         for ($i = 0; $i < self::FAKE_USERS; $i++) {
             $user = new User;
             $user->setEmail($faker->safeEmail());
+            $user->setName($faker->name());
             $userPassword = $this->passwordHasher->hashPassword(
                 $user,
                 'password'

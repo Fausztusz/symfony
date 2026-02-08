@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use App\Enum\ProjectStatus;
 use App\Repository\ProjectRepository;
+use App\Validator\EntityIdsExist;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 #[ORM\Index(name: 'status_idx', columns: ['status'])]
@@ -59,8 +62,11 @@ class Project
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(int $maxChars = 0): ?string
     {
+        if ($maxChars > 0) {
+            return substr($this->description, 0, $maxChars) . (strlen($this->description) > $maxChars ? '...' : '');
+        }
         return $this->description;
     }
 
@@ -123,5 +129,24 @@ class Project
         $this->team = $team;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addPropertyConstraint('title', new Assert\Type('string'));
+        $metadata->addPropertyConstraint('title', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('title', new Assert\Length(
+            min: 5,
+            max: 64,
+            minMessage: 'Title must be at least {{ limit }} characters long',
+            maxMessage: 'Title cannot be longer than {{ limit }} characters',
+        ));
+        $metadata->addPropertyConstraint('description', new Assert\Type('string'));
+        $metadata->addPropertyConstraint('status', new Assert\Choice(choices: [
+            ProjectStatus::PLANNED,
+            ProjectStatus::ACTIVE,
+            ProjectStatus::COMPLETED,
+        ]));
+        $metadata->addPropertyConstraint('team', new Assert\NotBlank());
     }
 }

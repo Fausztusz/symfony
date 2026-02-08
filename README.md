@@ -15,8 +15,13 @@ Open in the browser at `http://localhost`
 # Open interactive shell to the container
 docker compose exec -it app /bin/bash
 
+# Generate secret
+php bin/console secrets:generate-keys
+
 # Migrate database
 php bin/console doctrine:migrations:migrate
 # Seed database
 php bin/console doctrine:fixtures:load
 ~~~
+
+
