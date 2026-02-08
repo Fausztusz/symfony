@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block body %}
+    <div class="">
+        <div class="jumbotron">
+            <h1>Projects</h1>
+        </div>
+        <div class="w-100 d-flex justify-content-end">
+            <a href="{{ path('project.create') }}" class="btn btn-primary">
+                Create Project
+            </a>
+        </div>
+        <twig:Table data="{{ projects }}" columns="{{ ['Title', 'Description', 'Status'] }}">
+            <twig:block name="row" let:item>
+                <tr>
+                    <td>{{ item.getTitle }}</td>
+                    <td>
+                        <div role="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                             title="{{ item.getDescription }}">
+                            {{ item.getDescription(40) }}
+                        </div>
+                    </td>
+                    <td>{{ item.getStatus }}</td>
+                    <td><a href="{{ path('project.update', {id: item.id}) }}" type="button" class="btn btn-secondary">
+                            <twig:Edit/>
+                        </a></td>
+                </tr>
+            </twig:block>
+        </twig:Table>
+    </div>
+{% endblock %}

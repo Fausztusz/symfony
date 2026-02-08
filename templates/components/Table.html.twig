@@ -1,0 +1,88 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        {% for column in columns %}
+            <th>{{ column }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in data.items %}
+        <tr>
+            {% block row %}
+                {# default empty row #}
+            {% endblock %}
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="100%" class="text-center text-muted">
+                No data found
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if data.page > 1 %}
+            <li class="page-item">
+                <a class="page-link"
+                   href="{{ path('project', {page: data.page - 1, limit: data.limit}) }}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+        {% endif %}
+
+        {% if data.page - 3 >= 1 %}
+            <li class="page-item">
+                <a href="{{ path('project', {page: data.page - 3, limit: data.limit}) }}"
+                   class="page-link">{{ data.page - 3 }}</a></li>
+        {% endif %}
+
+        {% if data.page - 2 >= 1 %}
+            <li class="page-item">
+                <a href="{{ path('project', {page: data.page - 2, limit: data.limit}) }}"
+                   class="page-link">{{ data.page - 2 }}</a></li>
+        {% endif %}
+
+        {% if data.page - 1 >= 1 %}
+            <li class="page-item">
+                <a href="{{ path('project', {page: data.page - 1, limit: data.limit}) }}"
+                   class="page-link">{{ data.page - 1 }}</a></li>
+        {% endif %}
+
+        <li class="page-item">
+            <a class="page-link text-muted disabled">{{ data.page }}</a></li>
+
+        {% if data.page + 1 <= data.maxPage %}
+            <li class="page-item">
+                <a href="{{ path('project', {page: data.page + 1, limit: data.limit}) }}"
+                   class="page-link">{{ data.page + 1 }}</a></li>
+        {% endif %}
+
+        {% if data.page + 2 <= data.maxPage %}
+            <li class="page-item">
+                <a href="{{ path('project', {page: data.page + 2, limit: data.limit}) }}"
+                   class="page-link">{{ data.page + 2 }}</a></li>
+        {% endif %}
+
+        {% if data.page + 3 <= data.maxPage %}
+            <li class="page-item">
+                <a href="{{ path('project', {page: data.page + 3, limit: data.limit}) }}"
+                   class="page-link">{{ data.page + 3 }}</a></li>
+        {% endif %}
+
+        {% if data.page < data.maxPage %}
+            <li class="page-item">
+                <a class="page-link"
+                   href="{{ path('project', {page: data.page + 1, limit: data.limit}) }}"
+                   aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
