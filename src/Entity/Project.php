@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Enum\ProjectStatus;
 use App\Repository\ProjectRepository;
-use App\Validator\EntityIdsExist;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;

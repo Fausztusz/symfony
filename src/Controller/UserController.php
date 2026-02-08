@@ -29,7 +29,7 @@ final class UserController extends AbstractController
     }
 
     #[Route('/users/create', name: 'user.create')]
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
 
@@ -37,6 +37,8 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $password = $form->get('password')->getData();
+            $user->setPassword($passwordHasher->hashPassword($user, $password));
             $em->persist($user);
             $em->flush();
 
@@ -60,9 +62,7 @@ final class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $form->get('password')->getData();
             if ($password) {
-                $user->setPassword(
-                    $passwordHasher->hashPassword($user, $password)
-                );
+                $user->setPassword($passwordHasher->hashPassword($user, $password));
             }
 
             $em->persist($user);

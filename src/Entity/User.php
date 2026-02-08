@@ -6,11 +6,11 @@ use App\Enum\UserRole;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -196,5 +196,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
 
         return $data;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addPropertyConstraint('name', new Assert\Type('string'));
+        $metadata->addPropertyConstraint('name', new Assert\NotBlank());
+
+        $metadata->addPropertyConstraint('email', new Assert\Type('string'));
+        $metadata->addPropertyConstraint('email', new Assert\Email());
+        $metadata->addPropertyConstraint('email', new Assert\NotBlank());
+
+        $metadata->addPropertyConstraint('roles', new Assert\Choice(choices: [
+            UserRole::MEMBER->value,
+            UserRole::ADMIN->value,
+        ], multiple: true));
     }
 }

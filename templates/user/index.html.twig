@@ -9,7 +9,7 @@
         </div>
         <div class="w-100 d-flex justify-content-end">
             <a href="{{ path('user.create') }}" class="btn btn-primary">
-                Create Project
+                Create User
             </a>
         </div>
         <twig:Table data="{{ users }}" columns="{{ ['Name' ,'Email', 'Role', 'Teams', 'Actions'] }}" indexRoute="user">
