@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Team{% endblock %}
+
+{% block body %}
+    <div class="">
+        <div class="jumbotron">
+            <h1>Team</h1>
+        </div>
+        <div class="w-100 d-flex justify-content-end">
+            <a href="{{ path('team.create') }}" class="btn btn-primary">
+                Create Team
+            </a>
+        </div>
+        <twig:Table data="{{ teams }}"
+                    columns="{{ ['Name' ,'Description', 'Members' ,'Actions'] }}"
+                    indexRoute="team">
+            <twig:block name="row" let:item>
+                <tr>
+                    <td>{{ item.getName }}</td>
+                    <td>{{ item.getDescription }}</td>
+                    <td>
+                        <div class="row sm:row-cols-8 gap-1">
+                            {% for user in item.getMembers %}
+                                <div class="col btn btn-outline-primary small">{{ user.name }}</div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        <a href="{{ path('team.update', {id: item.id}) }}" type="button" class="btn btn-secondary">
+                            <twig:Edit/>
+                        </a>
+                    </td>
+                </tr>
+            </twig:block>
+        </twig:Table>
+    </div>
+{% endblock %}
