@@ -27,7 +27,7 @@
         {% if data.page > 1 %}
             <li class="page-item">
                 <a class="page-link"
-                   href="{{ path('project', {page: data.page - 1, limit: data.limit}) }}"
+                   href="{{ path(indexRoute, {page: data.page - 1, limit: data.limit}) }}"
                    aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only">Previous</span>
@@ -37,19 +37,19 @@
 
         {% if data.page - 3 >= 1 %}
             <li class="page-item">
-                <a href="{{ path('project', {page: data.page - 3, limit: data.limit}) }}"
+                <a href="{{ path(indexRoute, {page: data.page - 3, limit: data.limit}) }}"
                    class="page-link">{{ data.page - 3 }}</a></li>
         {% endif %}
 
         {% if data.page - 2 >= 1 %}
             <li class="page-item">
-                <a href="{{ path('project', {page: data.page - 2, limit: data.limit}) }}"
+                <a href="{{ path(indexRoute, {page: data.page - 2, limit: data.limit}) }}"
                    class="page-link">{{ data.page - 2 }}</a></li>
         {% endif %}
 
         {% if data.page - 1 >= 1 %}
             <li class="page-item">
-                <a href="{{ path('project', {page: data.page - 1, limit: data.limit}) }}"
+                <a href="{{ path(indexRoute, {page: data.page - 1, limit: data.limit}) }}"
                    class="page-link">{{ data.page - 1 }}</a></li>
         {% endif %}
 
@@ -58,13 +58,13 @@
 
         {% if data.page + 1 <= data.maxPage %}
             <li class="page-item">
-                <a href="{{ path('project', {page: data.page + 1, limit: data.limit}) }}"
+                <a href="{{ path(indexRoute, {page: data.page + 1, limit: data.limit}) }}"
                    class="page-link">{{ data.page + 1 }}</a></li>
         {% endif %}
 
         {% if data.page + 2 <= data.maxPage %}
             <li class="page-item">
-                <a href="{{ path('project', {page: data.page + 2, limit: data.limit}) }}"
+                <a href="{{ path(indexRoute, {page: data.page + 2, limit: data.limit}) }}"
                    class="page-link">{{ data.page + 2 }}</a></li>
         {% endif %}
 

@@ -9,5 +9,6 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 final class Table
 {
     public PaginatedResult $data;
+    public string $indexRoute;
     public iterable $columns;
 }
