@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block body %}
+    <div class="">
+        <div class="jumbotron">
+            <h1>Users</h1>
+        </div>
+        <div class="w-100 d-flex justify-content-end">
+            <a href="{{ path('user.create') }}" class="btn btn-primary">
+                Create Project
+            </a>
+        </div>
+        <twig:Table data="{{ users }}" columns="{{ ['Name' ,'Email', 'Role', 'Teams', 'Actions'] }}">
+            <twig:block name="row" let:item>
+                <tr>
+                    <td>{{ item.getName }}</td>
+                    <td>{{ item.getEmail }}</td>
+                    <td>
+                        <div>
+                            {% for role in item.getRoles %}
+                                <div class="capitalize-first btn btn-outline-secondary">{{ role }}</div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row sm:row-cols-4 gap-1">
+                            {% for team in item.getTeams %}
+                                <div class="col capitalize-first btn btn-outline-primary">{{ team.name }}</div>
+                            {% endfor %}
+                        </div>
+
+                    </td>
+                    <td>
+                        <a href="{{ path('user.update', {id: item.id}) }}" type="button" class="btn btn-secondary">
+                            <twig:Edit/>
+                        </a>
+                    </td>
+                </tr>
+            </twig:block>
+        </twig:Table>
+    </div>
+{% endblock %}

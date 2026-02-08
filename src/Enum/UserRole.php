@@ -2,10 +2,8 @@
 
 namespace App\Enum;
 
-class UserRole extends EnumType
+enum UserRole: string
 {
-    protected string $name = 'UserRole';
-    protected array $values = [self::ADMIN, self::MEMBER];
-    public const string ADMIN = 'ADMIN';
-    public const string MEMBER = 'MEMBER';
+    case  ADMIN = 'ADMIN';
+    case  MEMBER = 'MEMBER';
 }

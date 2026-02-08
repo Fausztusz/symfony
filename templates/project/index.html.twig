@@ -12,7 +12,7 @@
                 Create Project
             </a>
         </div>
-        <twig:Table data="{{ projects }}" columns="{{ ['Title', 'Description', 'Status'] }}">
+        <twig:Table data="{{ projects }}" columns="{{ ['Title', 'Description', 'Status', 'Actions'] }}">
             <twig:block name="row" let:item>
                 <tr>
                     <td>{{ item.getTitle }}</td>

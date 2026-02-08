@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
             'password'
         );
         $userAdmin->setPassword($adminPassword);
-        $userAdmin->setRole(UserRole::ADMIN);
+        $userAdmin->setRoles([UserRole::ADMIN]);
 
         $manager->persist($userAdmin);
 
@@ -49,7 +49,7 @@ class UserFixtures extends Fixture
                 'password'
             );
             $user->setPassword($userPassword);
-            $user->setRole($faker->randomElement([UserRole::ADMIN, UserRole::MEMBER, UserRole::MEMBER, UserRole::MEMBER]));
+            $user->setRoles([$faker->randomElement([UserRole::ADMIN, UserRole::MEMBER, UserRole::MEMBER, UserRole::MEMBER])]);
             $manager->persist($user);
         }
 

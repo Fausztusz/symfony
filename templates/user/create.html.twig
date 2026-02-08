@@ -5,11 +5,11 @@
 {% block body %}
     <div class="">
         <div class="jumbotron d-flex flex-row justify-content-between">
-            <h1>{% if id ?? false %} Update {% else %} Crate {% endif %} Project</h1>
+            <h1>{% if id ?? false %} Update {% else %} Crate {% endif %} User</h1>
             {% if id ?? false %}
-                <form method="POST" action="{{ path('project.delete', {id:id}) }}">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
+            <form method="POST" action="{{ path('user.delete', {id:id}) }}">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
             {% endif %}
         </div>
         {{ form_start(form) }}
@@ -18,10 +18,11 @@
         </div>
 
         <div class="form-group d-flex flex-column gap-3">
-            {{ form_row(form.title) }}
-            {{ form_row(form.description) }}
-            {{ form_row(form.status) }}
-            {{ form_row(form.team) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.password) }}
+            {{ form_row(form.roles) }}
+            {{ form_row(form.teams) }}
             <div class="w-100 d-flex justify-content-end ">
                 <button class="btn btn-primary w-25" type="submit">Save</button>
             </div>

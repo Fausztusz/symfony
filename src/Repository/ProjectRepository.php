@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\DTO\PaginatedResult;
 use App\Entity\Project;
+use App\Traits\Paginate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -13,32 +14,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProjectRepository extends ServiceEntityRepository
 {
+
+    use Paginate;
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Project::class);
-    }
-
-    public function paginate(int $page = 1, int $limit = 10): PaginatedResult
-    {
-        $page = max($page, 1);
-        $limit = min(100, max($limit, 1));
-
-        $query = $this->createQueryBuilder('p')
-            ->orderBy('p.id', 'ASC')
-            ->setFirstResult(($page - 1) * $limit)
-            ->setMaxResults($limit)
-            ->getQuery();
-
-        $paginator = new Paginator($query, true);
-        $lastPage = (int)ceil($paginator->count() / $limit);
-
-        return new PaginatedResult(
-            $paginator,
-            $paginator->count(),
-            $page,
-            $limit,
-            $lastPage,
-        );
     }
 
     //    /**
