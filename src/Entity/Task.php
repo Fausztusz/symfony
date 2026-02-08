@@ -7,6 +7,8 @@ use App\Enum\TaskStatus;
 use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 #[ORM\Index(name: 'status_idx', columns: ['status'])]
@@ -126,5 +128,28 @@ class Task
         $this->project = $project;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addPropertyConstraint('title', new Assert\Type('string'));
+        $metadata->addPropertyConstraint('title', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('title', new Assert\Length(
+            max: 64,
+            minMessage: 'Title must be at least {{ limit }} characters long',
+            maxMessage: 'Title cannot be longer than {{ limit }} characters',
+        ));
+
+        $metadata->addPropertyConstraint('description', new Assert\Type('string'));
+        $metadata->addPropertyConstraint('status', new Assert\Choice(choices: [
+            TaskStatus::TODO,
+            TaskStatus::IN_PROGRESS,
+            TaskStatus::DONE,
+        ]));
+        $metadata->addPropertyConstraint('priority', new Assert\Choice(choices: [
+            TaskPriority::LOW,
+            TaskPriority::MEDIUM,
+            TaskPriority::HIGH,
+        ]));
     }
 }

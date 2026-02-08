@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tasks{% endblock %}
+
+{% block body %}
+    <div class="">
+        <div class="jumbotron">
+            <h1>Users</h1>
+        </div>
+        <div class="w-100 d-flex justify-content-end">
+            <a href="{{ path('task.create') }}" class="btn btn-primary">
+                Create Task
+            </a>
+        </div>
+        <twig:Table data="{{ tasks }}"
+                    columns="{{ ['Title' ,'Description','Status','Priority','Due Date' ,'Assignee', 'Project'] }}"
+                    indexRoute="task">
+            <twig:block name="row" let:item>
+                <tr>
+                    <td>{{ item.getTitle }}</td>
+                    <td>{{ item.getDescription }}</td>
+                    <td>{{ item.getStatus }}</td>
+                    <td>{{ item.getPriority }}</td>
+                    <td>{{ item.getDueDate?.format('Y-m-d') }}</td>
+                    <td>{{ item.getAssignee?.getName }}</td>
+                    <td>{{ item.getProject.title }}</td>
+                    <td>
+                        <a href="{{ path('task.update', {id: item.id}) }}" type="button" class="btn btn-secondary">
+                            <twig:Edit/>
+                        </a>
+                    </td>
+                </tr>
+            </twig:block>
+        </twig:Table>
+    </div>
+{% endblock %}
