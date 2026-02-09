@@ -1,6 +1,6 @@
 <header class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">
+        <a class="navbar-brand" href="{{ path('home') }}">
             {{ title ?? 'Project Manager' }}
         </a>
 
@@ -18,42 +18,11 @@
 
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user') }}">Users</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('team') }}">Teams</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('project') }}">Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('task') }}">Tasks</a>
-                </li>
-            </ul>
-
-            <ul class="navbar-nav ms-auto">
-                {% if app.user %}
+                {% for route, label in {user: 'Users', team: 'Teams', project: 'Projects', task:'Tasks'} %}
                     <li class="nav-item">
-                        <span class="navbar-text me-3">
-                            {{ app.user.email }}
-                        </span>
+                        <a class="nav-link" href="{{ path(route) }}">{{ label }}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-light btn-sm" href="">
-                            Logout
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="btn btn-outline-light btn-sm" href="">
-                            Login
-                        </a>
-                    </li>
-                {% endif %}
+                {% endfor %}
             </ul>
         </div>
     </div>
