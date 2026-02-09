@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block body %}
+    <div class="">
+        <div class="jumbotron">
+            <h1>Project Statistics</h1>
+        </div>
+
+        {% for status, grouppedTask in tasks %}
+            <h3>{{ status }}</h3>
+            {% for task  in grouppedTask %}
+                <ul>
+                    <li><a href="{{ path('task.update',{id: task.id}) }}">{{ task.getTitle }}</a></li>
+                </ul>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock %}

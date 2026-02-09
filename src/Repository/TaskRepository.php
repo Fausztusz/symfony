@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Task;
+use App\Enum\TaskStatus;
 use App\Traits\Paginate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -13,25 +14,29 @@ use Doctrine\Persistence\ManagerRegistry;
 class TaskRepository extends ServiceEntityRepository
 {
     use Paginate;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Task::class);
     }
 
-    //    /**
-    //     * @return Task[] Returns an array of Task objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return array Returns an array of Task objects
+     */
+    public function findByProjectGroupedByStatus(int $value): array
+    {
+        $tasks = $this->createQueryBuilder('t')
+            ->andWhere('t.project = :val')
+            ->setParameter('val', $value)
+            ->orderBy('t.status', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        return array_reduce($tasks, function (array $result, Task $task) {
+            $result[$task->getStatus()][] = $task;
+            return $result;
+        }, [TaskStatus::TODO => [], TaskStatus::IN_PROGRESS => [], TaskStatus::DONE => []]);
+    }
 
     //    public function findOneBySomeField($value): ?Task
     //    {

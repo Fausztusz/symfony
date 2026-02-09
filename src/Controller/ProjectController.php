@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
+use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,6 +25,18 @@ final class ProjectController extends AbstractController
                 $request->query->getInt('page', 1),
                 $limit,
             ),
+        ]);
+    }
+
+    #[Route('/projects/{id}/stat', name: 'project.stat')]
+    public function stat(?Project $project, TaskRepository $taskRepository): Response
+    {
+        if (null === $project) {
+            return $this->redirectToRoute('error', ['code' => 404]);
+        }
+
+        return $this->render('project/stat.html.twig', [
+            'tasks' => $taskRepository->findByProjectGroupedByStatus($project->getId()),
         ]);
     }
 

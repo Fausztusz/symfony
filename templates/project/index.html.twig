@@ -12,7 +12,8 @@
                 Create Project
             </a>
         </div>
-        <twig:Table data="{{ projects }}" columns="{{ ['Title', 'Description', 'Status', 'Actions'] }}" indexRoute="project">
+        <twig:Table data="{{ projects }}" columns="{{ ['Title', 'Description', 'Status', 'Actions'] }}"
+                    indexRoute="project">
             <twig:block name="row" let:item>
                 <tr>
                     <td>{{ item.getTitle }}</td>
@@ -23,9 +24,14 @@
                         </div>
                     </td>
                     <td>{{ item.getStatus }}</td>
-                    <td><a href="{{ path('project.update', {id: item.id}) }}" type="button" class="btn btn-secondary">
+                    <td>
+                        <a href="{{ path('project.update', {id: item.id}) }}" type="button" class="btn btn-secondary">
                             <twig:Edit/>
-                        </a></td>
+                        </a>
+                        <a href="{{ path('project.stat', {id: item.id}) }}" type="button" class="btn btn-secondary">
+                            <twig:EyeIcon/>
+                        </a>
+                    </td>
                 </tr>
             </twig:block>
         </twig:Table>
