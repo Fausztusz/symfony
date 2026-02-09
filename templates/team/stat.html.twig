@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block body %}
+<div>
+    <div class="jumbotron">
+        <h1>Team Statistics</h1>
+    </div>
+
+
+    <div class="w-100 d-flex justify-content-between">
+        <div>
+            <div>
+                <h2>Team statistics</h2>
+                {% for team in teamStatistics %}
+                    <h4>{{ team.status }}: {{ team.count }}</h4>
+                {% else %}
+                    <h4>No statistics available</h4>
+                {% endfor %}
+            </div>
+            <div>
+                <canvas id="teamChart"></canvas>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <h2>Project statistics</h2>
+                {% for project in projectStatistics %}
+                    <h4>{{ project.status }}: {{ project.count }}</h4>
+                {% else %}
+                    <h4>No statistics available</h4>
+                {% endfor %}
+            </div>
+            <div>
+                <canvas id="projectChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" defer>
+        const team = document.getElementById('teamChart');
+        const project = document.getElementById('projectChart');
+
+        new Chart(team, {
+            type: 'bar',
+            data: {
+                labels: [{% for team in teamStatistics %}'{{ team.status }}',{% endfor %}],
+                datasets: [{
+                    label: 'Task statistics',
+                    data: [{% for team in teamStatistics %}'{{ team.count }}',{% endfor %}],
+                    borderWidth: 1
+                }]
+            },
+        });
+
+        new Chart(project, {
+            type: 'bar',
+            data: {
+                labels: [{% for project in projectStatistics %}'{{ project.status }}',{% endfor %}],
+                datasets: [{
+                    label: 'Project statistics',
+                    data: [{% for project in projectStatistics %}'{{ project.count }}',{% endfor %}],
+                    borderWidth: 1
+                }]
+            },
+        });
+    </script>
+{% endblock %}

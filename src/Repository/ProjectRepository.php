@@ -16,33 +16,23 @@ class ProjectRepository extends ServiceEntityRepository
 {
 
     use Paginate;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Project::class);
     }
 
-    //    /**
-    //     * @return Project[] Returns an array of Project objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Project
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * @return Project[] Returns an array of Project objects
+     */
+    public function getProjectStatistics(int $teamID): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select(['p.status', 'COUNT(p.status) AS count'])
+            ->andWhere('p.team = :val')
+            ->setParameter('val', $teamID)
+            ->groupBy('p.status')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -27,9 +27,14 @@
                         </div>
                     </td>
                     <td>
-                        <a href="{{ path('team.update', {id: item.id}) }}" type="button" class="btn btn-secondary">
-                            <twig:Edit/>
-                        </a>
+                        <div class="btn-group">
+                            <a href="{{ path('team.update', {id: item.id}) }}" type="button" class="btn btn-secondary">
+                                <twig:Edit/>
+                            </a>
+                            <a href="{{ path('team.stat', {id: item.id}) }}" type="button" class="btn btn-secondary">
+                                <twig:EyeIcon/>
+                            </a>
+                        </div>
                     </td>
                 </tr>
             </twig:block>

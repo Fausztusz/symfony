@@ -9,7 +9,7 @@
         </div>
 
         {% for status, grouppedTask in tasks %}
-            <h3>{{ status }}</h3>
+            <h3>{{ status }} ({{ grouppedTask | length }})</h3>
             {% for task  in grouppedTask %}
                 <ul>
                     <li><a href="{{ path('task.update',{id: task.id}) }}">{{ task.getTitle }}</a></li>

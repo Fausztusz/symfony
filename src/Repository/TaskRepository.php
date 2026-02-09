@@ -37,14 +37,4 @@ class TaskRepository extends ServiceEntityRepository
             return $result;
         }, [TaskStatus::TODO => [], TaskStatus::IN_PROGRESS => [], TaskStatus::DONE => []]);
     }
-
-    //    public function findOneBySomeField($value): ?Task
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

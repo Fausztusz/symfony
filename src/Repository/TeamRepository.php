@@ -19,28 +19,20 @@ class TeamRepository extends ServiceEntityRepository
         parent::__construct($registry, Team::class);
     }
 
-    //    /**
-    //     * @return Team[] Returns an array of Team objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+        /**
+         * @return Team[] Returns an array of Team objects
+         */
+    public function getTeamStatistics(int $teamID): array
+    {
+        return $this->createQueryBuilder('team')
+            ->select(['task.status', 'COUNT(task.status) as count'])
+            ->join('team.projects', 'p')
+            ->join('p.tasks', 'task')
+            ->andWhere('team.id = :val')
+            ->groupBy('task.status')
+            ->setParameter('val', $teamID)
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Team
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

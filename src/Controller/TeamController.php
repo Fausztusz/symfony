@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Team;
 use App\Form\TeamType;
+use App\Repository\ProjectRepository;
 use App\Repository\TeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -67,6 +68,19 @@ final class TeamController extends AbstractController
         return $this->render('team/create.html.twig', [
             'form' => $form,
             'id' => $team->getId(),
+        ]);
+    }
+
+    #[Route('/team/{id}/stat', name: 'team.stat')]
+    public function stat(?Team $team, TeamRepository $teamRepository, ProjectRepository $projectRepository): Response
+    {
+        if (null === $team) {
+            return $this->redirectToRoute('error', ['code' => 404]);
+        }
+
+        return $this->render('team/stat.html.twig', [
+            'teamStatistics' =>  $teamRepository->getTeamStatistics($team->getId()),
+            'projectStatistics' =>  $projectRepository->getProjectStatistics($team->getId()),
         ]);
     }
 
