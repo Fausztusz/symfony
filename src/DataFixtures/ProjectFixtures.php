@@ -12,7 +12,7 @@ use Faker\Factory;
 
 class ProjectFixtures extends Fixture implements DependentFixtureInterface
 {
-    private const int FAKE_PROJECTS = 3;
+    private const int FAKE_PROJECTS = 5;
     public const string PROJECT_REFERENCE = 'ExampleProject';
 
     public function load(ObjectManager $manager): void

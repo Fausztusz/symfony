@@ -11,7 +11,7 @@ use Faker\Factory;
 class TeamFixtures extends Fixture
 {
     public const string TEAM_REFERENCE = 'teamA';
-    private const int FAKE_TEAMS = 5;
+    private const int FAKE_TEAMS = 10;
 
     public function load(ObjectManager $manager): void
     {

@@ -19,6 +19,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             UserFixtures::class,
             TeamFixtures::class,
             ProjectFixtures::class,
+            TaskFixtures::class,
         ];
     }
 }

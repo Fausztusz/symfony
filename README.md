@@ -23,5 +23,3 @@ php bin/console doctrine:migrations:migrate
 # Seed database
 php bin/console doctrine:fixtures:load
 ~~~
-
-

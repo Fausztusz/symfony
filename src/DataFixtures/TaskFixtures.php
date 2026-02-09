@@ -14,7 +14,7 @@ use Faker\Factory;
 
 class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
-    private const int FAKE_TASKS = 10;
+    private const int FAKE_TASKS = 15;
 
 
     public function load(ObjectManager $manager): void
